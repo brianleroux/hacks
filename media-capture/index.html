@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+        
+<video id="live" autoplay></video>
+
+<script>
+navigator.webkitGetUserMedia("video",
+    function(stream) {
+        var video = document.getElementById("live")
+        video.src = window.webkitURL.createObjectURL(stream)
+    },
+    function(err) {
+        console.log("Unable to get video stream!")
+    }
+)
+</script>
+ </body>
+ </html>

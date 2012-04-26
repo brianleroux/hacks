@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 <body>
-        
-<video id="live" autoplay></video>
+<video id=live autoplay></video>
 
+<script src=navigator.getusermedia.js></script>        
 <script>
-navigator.webkitGetUserMedia("video",
+navigator.getUserMedia({ video: true, audio: true },
     function(stream) {
         var video = document.getElementById("live")
         video.src = window.webkitURL.createObjectURL(stream)

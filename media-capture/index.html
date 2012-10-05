@@ -6,14 +6,53 @@
 <script src=navigator.getusermedia.js></script>       
 <script>
 navigator.getUserMedia({ video: true, audio: true },
+    
     function(stream) {
+        // play wit video b/c thats cool
         var video = document.getElementById("live")
         video.src = window.webkitURL.createObjectURL(stream)
+        
+        // play w/ the audio
+        var context = new webkitAudioContext()
+        var streamSource = context.createMediaStreamSource(stream)
+        var sent = false
+   
+        var bufferFiller = context.createJavaScriptNode(2048, 1, 1)
+        bufferFiller.onaudioprocess = function(e) {
+        if (sent) return
+            console.log(JSON.stringify(e.inputBuffer.getChannelData(0)))
+            sent = true
+        }
+
+        streamSource.connect(bufferFiller)
+        bufferFiller.connect(context.destination)
     },
     function(err) {
         console.log("Unable to get video stream!")
     }
 )
+
+/*
+navigator.webkitGetUserMedia({audio:true}, function (stream) {
+var context = new webkitAudioContext()
+var streamSource = context.createMediaStreamSource(stream)
+var sent = false
+
+bufferFiller = context.createJavaScriptNode(2048, 1, 1)
+bufferFiller.onaudioprocess = function(e) {
+if (sent) return
+console.log(JSON.stringify(e.inputBuffer.getChannelData(0)))
+sent = true
+}
+
+streamSource.connect(bufferFiller)
+bufferFiller.connect(context.destination)
+
+}, function(){})
+*/
+
+
+
 </script>
  </body>
  </html>

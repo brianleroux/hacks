@@ -1,0 +1,23 @@
+var str="Recognized text will be copied here.";
+
+var inp = document.createElement('input');
+inp.style.fontSize = '25px';
+inp.setAttribute('onwebkitspeechchange', 'onChange(this.value)'); 
+inp.setAttribute('x-webkit-speech');
+document.body.appendChild(inp);
+
+var txt = document.createElement('textarea');
+txt.style.margin = "20px auto 0 auto";
+txt.style.height = '200px';
+txt.style.width = '100%';
+txt.value = str;
+document.body.appendChild(txt);
+
+function onChange(val) {
+    if (txt.value == str) {
+        txt.value = val; 
+    } else { 
+        txt.value = txt.value + ' ' + val;
+    }
+}
+
